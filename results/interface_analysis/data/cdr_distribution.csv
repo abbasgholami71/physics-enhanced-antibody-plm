@@ -1,9 +1,0 @@
-chain,region,residue_count,percentage
-H,CDR-H1,3,20.0
-H,CDR-H2,3,20.0
-H,CDR-H3,6,40.0
-H,Framework,3,20.0
-L,CDR-L1,5,62.5
-L,CDR-L2,2,25.0
-L,CDR-L3,0,0.0
-L,Framework,1,12.5

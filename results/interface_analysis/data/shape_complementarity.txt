@@ -1,7 +1,0 @@
-# Interface Shape Complementarity
-
-Complementarity score: 0.074
-Average interface distance: 12.58 Å
-Minimum interface distance: 2.27 Å
-Maximum interface distance: 32.45 Å
-Distance standard deviation: 6.13 Å
