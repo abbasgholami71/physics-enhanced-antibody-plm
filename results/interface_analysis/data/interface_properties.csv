@@ -1,0 +1,13 @@
+chain,property,count,percentage
+heavy,hydrophobic,3,20.0
+heavy,charged-,3,20.0
+heavy,polar,7,46.7
+heavy,special,2,13.3
+light,hydrophobic,2,25.0
+light,charged-,1,12.5
+light,polar,5,62.5
+antigen,hydrophobic,10,37.0
+antigen,charged+,3,11.1
+antigen,charged-,4,14.8
+antigen,polar,8,29.6
+antigen,special,2,7.4

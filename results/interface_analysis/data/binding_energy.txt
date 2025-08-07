@@ -1,0 +1,17 @@
+# Binding Energy Analysis
+
+Total binding energy: -44.112
+Heavy chain contribution: -28.480
+Light chain contribution: -15.632
+
+## Top Energetic Contacts
+L:32 - A:381: -0.849
+H:56 - A:378: -0.831
+L:27 - A:430: -0.826
+H:52 - A:377: -0.825
+H:54 - A:378: -0.782
+H:99 - A:380: -0.704
+H:31 - A:384: -0.701
+H:96 - A:383: -0.691
+H:96 - A:384: -0.685
+H:96 - A:385: -0.685
