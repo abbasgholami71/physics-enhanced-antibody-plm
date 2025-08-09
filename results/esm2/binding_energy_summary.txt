@@ -1,0 +1,3 @@
+Heavy chain total binding energy: 102.5810
+Light chain total binding energy: 122.4059
+Ratio (Heavy/Light): 0.8380
