@@ -1,0 +1,21 @@
+integrator    = md
+dt            = 0.002
+nsteps        = 250000        ; 500 ps
+cutoff-scheme = Verlet
+rlist         = 1.2
+coulombtype   = PME
+rcoulomb      = 1.2
+vdwtype       = switch
+rvdw-switch   = 1.0
+rvdw          = 1.2
+DispCorr      = EnerPres
+tcoupl        = V-rescale
+tc-grps       = Protein Non-Protein
+tau_t         = 0.5 0.5
+ref_t         = 300 300
+pcoupl        = no
+constraints   = h-bonds
+gen-vel       = yes
+gen-temp      = 300
+pbc           = xyz
+; Keep default position restraints from posre.itp automatically included

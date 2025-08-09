@@ -1,0 +1,45 @@
+############### PREPARATION ###############
+
+# downloading the CHARMM36m force field to the directory
+wget -O charmm36-jul2022.ff.tgz "https://mackerell.umaryland.edu/download.php?filename=CHARMM_ff_params_files/toppar_c36_jul22.tgz"
+tar xzf charmm36-jul2022.ff.tgz
+
+# cleaning up the PDB file before pdb2gmx
+awk ' /^HETATM/ && ($4=="GOL" || $4=="SO4"){next} {print} ' original.pdb > step1.pdb
+awk '/^(ATOM|HETATM)/{ cur=substr($0,22,1); if(prev!="" && cur!=prev){print "TER"} print; prev=cur; next } END{print "TER"} ' step1.pdb > cleaned_complex.pdb
+grep -v ' NAG ' cleaned_complex.pdb > cleaned_complex_noNAG.pdb
+
+# converting pdb to GROMACS format files
+gmx pdb2gmx -f cleaned_complex_noNAG.pdb -o processed.gro -p topol.top -i posre.itp -water tip3p -ignh
+
+# creating the simulation box
+gmx editconf -f processed.gro -o boxed.gro -bt dodecahedron -d 1.2
+ 
+# solvating the complex and adding solvent molecules
+gmx solvate -cp boxed.gro -cs spc216.gro -o solv.gro -p topol.top
+
+# running grompp to see system charge
+gmx grompp -f em.mdp -c solv.gro -p topol.top -o ions.tpr -maxwarn 1
+
+# neutralizing the system by adding ions
+gmx genion -s ions.tpr -o solv_ions.gro -p topol.top -pname NA -nname CL -neutral -conc 0.15
+
+# Energy Minimization
+gmx grompp -f em.mdp -c solv_ions.gro -p topol.top -o em.tpr
+running through em_cpu.slurm with the em.mdp parameter file
+
+# Equilibration NVT: 500ps
+gmx grompp -f nvt.mdp -c em.gro -r em.gro -p topol.top -o nvt.tpr
+running through nvt_cpu.slurm with the nvt.mdp parameter file
+
+# Equilibration NPT: 1ns
+gmx grompp -f npt.mdp -c nvt.gro -r nvt.gro -p topol.top -o npt.tpr
+running through npt_cpu.slurm with the npt.mdp parameter file
+
+# Relaxation NPT: 500ps - unrestrained NPT with a shorter tau_p (2.0 ps) and no position restraints to let side chains and any flexible loops relax in the now-stable box
+gmx grompp -f npt_relax.mdp -c npt.gro -p topol.top -o npt_relax.tpr
+running through npt_relax_cpu.slurm with the npt_relax.mdp parameter file
+
+############### PRODUCTION ############### 50ns
+gmx grompp -f md.mdp -c npt_relax.gro -p topol.top -o md.tpr
+running through production_cpu.slurm with the md.mdp parameter file

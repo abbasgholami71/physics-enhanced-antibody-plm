@@ -1,0 +1,13 @@
+integrator = steep
+nsteps     = 5000
+emtol      = 1000
+cutoff-scheme = Verlet
+rlist      = 1.2
+coulombtype = PME
+rcoulomb   = 1.2
+vdwtype    = switch
+rvdw-switch= 1.0
+rvdw       = 1.2
+DispCorr   = EnerPres
+constraints= h-bonds
+pbc        = xyz
