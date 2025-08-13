@@ -1,0 +1,3 @@
+Heavy chain interface residues: []
+Light chain interface residues: []
+RBD interface residues: []
