@@ -1,0 +1,48 @@
+# Structure-Based Interface Analysis
+
+## Overview
+Heavy chain sequence: 222 residues
+Light chain sequence: 221 residues
+RBD sequence: 195 residues
+
+## Interface Statistics
+Heavy chain interface residues: 17
+Light chain interface residues: 9
+RBD interface residues: 29
+
+Heavy chain CDR residues: 9 (52.9%)
+Heavy chain framework residues: 8 (47.1%)
+Light chain CDR residues: 4 (44.4%)
+Light chain framework residues: 5 (55.6%)
+
+## Interface by Region
+Heavy CDR-H1: 5 residues
+  Residues: 26, 27, 28, 30, 31
+Heavy CDR-H2: 3 residues
+  Residues: 52, 54, 55
+Heavy CDR-H3: 1 residues
+  Residues: 102
+Heavy Framework: 8 residues
+  Residues: 1, 25, 33, 57, 58, 59, 74, 103
+
+Light CDR-L1: 3 residues
+  Residues: 31, 33, 34
+Light CDR-L2: 0 residues
+Light CDR-L3: 1 residues
+  Residues: 97
+Light Framework: 5 residues
+  Residues: 38, 98, 99, 100, 102
+
+## Interface Residues
+Heavy chain: 1, 25, 26, 27, 28, 30, 31, 33, 52, 54, 55, 57, 58, 59, 74, 102, 103
+
+Light chain: 31, 33, 34, 38, 97, 98, 99, 100, 102
+
+RBD: 71, 74, 85, 112, 113, 114, 115, 116, 117, 121, 123, 124, 141, 143, 153, 154, 155, 156, 157, 158, 161, 162, 163, 164, 165, 166, 168, 169, 173
+
+
+## Additional Information
+All data and visualizations are saved in the following directories:
+- Raw data: results/structure_prediction\data
+- Plots: results/structure_prediction\plots
+- Structures: results/structure_prediction\structures

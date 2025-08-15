@@ -1,0 +1,19 @@
+# CDR Distribution in Interface
+
+## Heavy Chain
+CDR-H1: 5 residues - [26, 27, 28, 31, 32]
+CDR-H2: 3 residues - [52, 55, 56]
+CDR-H3: 3 residues - [100, 101, 102]
+Framework: 8 residues - [1, 2, 33, 57, 58, 59, 103, 104]
+
+CDR residues: 11/19 (57.9%)
+Framework residues: 8/19 (42.1%)
+
+## Light Chain
+CDR-L1: 3 residues - [27, 31, 33]
+CDR-L2: 1 residues - [55]
+CDR-L3: 0 residues - []
+Framework: 6 residues - [2, 38, 98, 99, 100, 102]
+
+CDR residues: 4/10 (40.0%)
+Framework residues: 6/10 (60.0%)

@@ -1,0 +1,3 @@
+Heavy chain binding hotspots: [np.int64(29), np.int64(55), np.int64(102)]
+Light chain binding hotspots: [np.int64(34), np.int64(56), np.int64(98)]
+RBD binding hotspots: [np.int64(157), np.int64(169)]
