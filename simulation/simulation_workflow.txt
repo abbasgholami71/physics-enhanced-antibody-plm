@@ -48,3 +48,22 @@ running through production_cpu.slurm with the md.mdp parameter file
 # making the index file and naming different chains
 gmx make_ndx -f npt_relax.gro -o index.ndx
 # command: ri n1-n2 ---> then go to the ndx file and rename the groups
+
+# calculating interface residues for each chain
+gmx select -f md.xtc -s md.tpr -n index.ndx -select 'group "rbd" and within 0.4 of group "antibody"' -seltype res_com -os contacts_RBD -of interface_residues_RBD
+
+# adding energy groups to mdp file ---> rerun.mdp and reruning for generating energy groups for RBD and Antibody
+gmx grompp -f rerun.mdp -c npt_relax.gro -p topol.top -n index.ndx -o rerun.tpr
+running through rerun.slurm with the rerun.mdp parameter file
+
+# calculating interaction energy
+ gmx energy -f rerun.edr -o interaction_energy.xvg -sum yes
+
+# calculating the number of H-bonds
+gmx hbond -f md.xtc -s md.tpr -n index.ndx   -r 'group "rbd"' -t 'group "antibody"'   -num hbnum_RBD_Antibody.xvg -seltype res_com -selrpos res_com
+
+# calculating RMSD
+gmx rms -f md.xtc -s md.tpr -n index.ndx -o rmsd.xvg
+
+# calculating SASA
+gmx sasa -f md.xtc -s md.tpr -n index.ndx -o sasa_total.xvg -or sasa_residue.xvg
