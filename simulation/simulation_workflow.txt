@@ -43,3 +43,8 @@ running through npt_relax_cpu.slurm with the npt_relax.mdp parameter file
 ############### PRODUCTION ############### 50ns
 gmx grompp -f md.mdp -c npt_relax.gro -p topol.top -o md.tpr
 running through production_cpu.slurm with the md.mdp parameter file
+
+############### POST PROCESS #############
+# making the index file and naming different chains
+gmx make_ndx -f npt_relax.gro -o index.ndx
+# command: ri n1-n2 ---> then go to the ndx file and rename the groups
