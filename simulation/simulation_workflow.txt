@@ -63,7 +63,10 @@ running through rerun.slurm with the rerun.mdp parameter file
 gmx hbond -f md.xtc -s md.tpr -n index.ndx   -r 'group "rbd"' -t 'group "antibody"'   -num hbnum_RBD_Antibody.xvg -seltype res_com -selrpos res_com
 
 # calculating RMSD
-gmx rms -f md.xtc -s md.tpr -n index.ndx -o rmsd.xvg
+gmx trjconv -s md.tpr -f md.xtc -o nojump.xtc -pbc nojump
+gmx trjconv -s md.tpr -f nojump.xtc -o whole_centered.xtc -pbc mol -center
+gmx rms -f whole_centered.xtc -s md.tpr -n index.ndx -o rmsd.xvg
 
 # calculating SASA
 gmx sasa -f md.xtc -s md.tpr -n index.ndx -o sasa_total.xvg -or sasa_residue.xvg
+
