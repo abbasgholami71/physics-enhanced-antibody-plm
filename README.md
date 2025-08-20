@@ -4,7 +4,6 @@ Comparative study of the SARS‑CoV‑2 RBD and the CR3022 antibody interface us
 
 Badges:
 - ![Python](https://img.shields.io/badge/Python-3.9%2B-blue.svg)
-- ![Made with Jupyter](https://img.shields.io/badge/Made%20with-Jupyter-orange.svg)
 - ![GROMACS](https://img.shields.io/badge/GROMACS-2021%2B-336699.svg)
 
 ## Highlights
