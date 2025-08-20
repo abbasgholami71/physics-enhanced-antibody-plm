@@ -1,5 +1,6 @@
-# Physics-Enhanced Antibody PLM
-Framework enhancing protein language models with physics-based simulations for improved biomolecular interaction prediction. This repository integrates state-of-the-art protein language models (ESM-2, AntiBERTy), structure prediction (AlphaFold, Boltz-2), and molecular dynamics (GROMACS) to analyze the interface of the SARS-CoV-2 RBD and the CR3022 antibody.
+# Antibody–RBD Interface Analysis with PLMs, Structure Modeling, and MD
+
+Comparative study of the SARS‑CoV‑2 RBD and the CR3022 antibody interface using protein language models (ESM‑2, AntiBERTy), structure prediction/refinement (AlphaFold, Boltz‑2), and molecular dynamics (GROMACS). This repository does not introduce a new or “enhanced” PLM; it evaluates and contrasts predictions across data‑driven models and physics‑based simulations.
 
 Badges:
 - ![Python](https://img.shields.io/badge/Python-3.9%2B-blue.svg)
@@ -7,162 +8,147 @@ Badges:
 - ![GROMACS](https://img.shields.io/badge/GROMACS-2021%2B-336699.svg)
 
 ## Highlights
-- Protein language models:
-  - ESM-2 and AntiBERTy embeddings and interface propensity analyses
-- Structure modeling:
-  - Complex and component modeling using AlphaFold and Boltz-2
-- Interface analysis:
-  - Residue-level contacts, hydrogen bonds, SASA/BSA, interface maps, and scoring
+- PLM-based interface propensities using:
+  - ESM‑2 (general protein LM)
+  - AntiBERTy (antibody-focused LM)
+- Structure modeling and selection using:
+  - AlphaFold/ColabFold and Boltz‑2
+- Interface characterization:
+  - Contacts, H‑bonds, SASA/BSA, residue‑level maps and summaries
 - Molecular dynamics:
-  - Clean, reproducible GROMACS workflow for pre-processing, running, and post-processing MD
-- Reproducibility:
-  - Scripted analyses and organized inputs/outputs for end-to-end reproducibility
+  - Clean, reproducible GROMACS pre‑processing → equilibration → production → analyses
+- End-to-end comparison:
+  - Contrast PLM‑derived insights against modeled structures and MD‑averaged interface behavior
 
 ## Repository structure
 ```
 physics-enhanced-antibody-plm/
-├─ structure/     # Structure files (PDB) for antibody, RBD, and complexes
-├─ data/          # Sequences (FASTA/CSV/JSON) for antibody, RBD, and complexes
-├─ scripts/       # PLM utilities, structural interface analyses, and MD analytics
-└─ simulation/    # MD inputs (topologies, parameters) and workflow scripts
+├─ structure/     # PDB files for antibody (H/L), RBD, and modeled complexes
+├─ data/          # Sequences for antibody, RBD, and complex metadata
+├─ scripts/       # PLM utilities, interface analyses, and MD post-processing
+└─ simulation/    # GROMACS inputs and a clean MD workflow
 ```
 
 - structure/
-  - Contains PDB files for isolated chains (antibody heavy/light, RBD) and modeled complexes
-  - Suggested naming: antibody_(H|L).pdb, rbd.pdb, complex_*.pdb
+  - Example naming: antibody_H.pdb, antibody_L.pdb, rbd.pdb, complex_af2_v1.pdb, complex_boltz2_v1.pdb
 - data/
-  - Contains sequences (FASTA or simple text) for antibody chains, RBD, and complex metadata
+  - Sequences (FASTA or txt) for antibody chains and RBD; optional complex or mapping files
 - scripts/
-  - Utilities to run protein language models (ESM-2, AntiBERTy)
-  - Interface residue detection, contact maps, and structural comparison
-  - MD trajectory analysis (RMSD/RMSF, H-bonds, SASA/BSA, contacts, clustering)
+  - Notebooks and/or Python scripts to run PLMs (ESM‑2, AntiBERTy), detect interface residues, compute contact/H‑bond/BSA metrics, and analyze MD trajectories (RMSD/RMSF, SASA, clustering)
 - simulation/
-  - GROMACS-ready topology, parameter files, and a clean workflow for pre-, run-, and post-processing
+  - GROMACS topology/parameter files (.top, .itp, .mdp) and a streamlined workflow for pre‑, run‑, and post‑processing
 
 ## Getting started
 
 ### Prerequisites
 - Python 3.9+
-- Conda or venv for environment management
-- GROMACS 2021+ (compiled with double or single precision consistently)
-- Optional: CUDA-enabled PyTorch for accelerated PLM inference
+- JupyterLab/Notebook
+- GROMACS 2021+ (ensure a consistent precision build)
+- Optional: CUDA‑enabled PyTorch for faster PLM inference
 
-Recommended Python packages (install via conda or pip):
-- pytorch (CPU or CUDA), torchvision, torchaudio
-- biopython, mdanalysis, mdtraj
-- numpy, scipy, pandas, scikit-learn
-- matplotlib, seaborn
-- tqdm, click, pyyaml
-- fair-esm (for ESM-2)
-- transformers (for AntiBERTy via Hugging Face)
-- pdb-tools (optional utilities)
+Recommended Python packages (conda or pip):
+- Core: numpy, scipy, pandas, matplotlib, seaborn, tqdm, pyyaml, click
+- Bio/simulation I/O: biopython, MDAnalysis, mdtraj
+- ML: torch (CPU or CUDA build), fair‑esm (ESM‑2), transformers (AntiBERTy via HF)
+- Utilities: pdb‑tools (optional)
 
 Example environment setup:
 ```bash
 # Create and activate environment
-conda create -n pe-aplm python=3.10 -y
-conda activate pe-aplm
+conda create -n rbd-cr3022 python=3.10 -y
+conda activate rbd-cr3022
 
-# Install core scientific stack
-conda install -c conda-forge numpy scipy pandas scikit-learn matplotlib seaborn tqdm biopython -y
+# Scientific Python + bio/sim I/O
+conda install -c conda-forge numpy scipy pandas matplotlib seaborn tqdm biopython -y
 conda install -c conda-forge mdanalysis mdtraj -y
 
-# Install PyTorch (choose CUDA/CPU build as appropriate)
-# See https://pytorch.org/get-started/locally/ for the exact command for your system
+# PyTorch (choose CPU/GPU per your system)
+# See https://pytorch.org/get-started/locally/ for the right command; CPU example:
 pip install torch --index-url https://download.pytorch.org/whl/cpu
 
-# Install PLM toolkits
+# PLMs
 pip install fair-esm transformers
 
-# Optional utilities
+# Optional helpers
 pip install pdb-tools pyyaml click
 ```
 
-GROMACS installation:
-- Install system-wide or via conda-forge:
+GROMACS installation (conda-forge example):
 ```bash
 conda install -c conda-forge gromacs -y
 ```
 
-Note: If you rely on GPU-accelerated MD or specific force fields, prefer a system or module installation that matches your hardware.
+Note: For GPU‑accelerated MD, prefer a system/module install matched to your drivers.
 
 ## Typical workflow
 
 1) Prepare sequences
-- Place antibody chain sequences and RBD sequence files in data/.
-- Use FASTA or plain text; ensure headers and chain identifiers are clear.
+- Place the antibody heavy/light and RBD sequences in data/ (FASTA or txt).
+- Keep chain labels consistent (e.g., H, L for antibody; R for RBD).
 
-2) Run protein language models
-- Use scripts in scripts/ to compute embeddings and residue-level interface propensities from:
-  - ESM-2: embeddings, attention-based contact/propensity features
-  - AntiBERTy: antibody-specific features for paratope propensity
-- Output tips:
-  - Save per-residue CSV/NPZ with positions, chain IDs, embeddings, and scores under data/ or a results/ subfolder you create.
+2) Run protein language models (PLMs)
+- Use notebooks/scripts in scripts/ to compute residue‑level features:
+  - ESM‑2 embeddings and attention/propensity features
+  - AntiBERTy paratope/interface propensities for antibody chains
+- Save outputs (e.g., CSV/NPZ) with residue indices, chain IDs, and scores.
 
-3) Structural modeling
-- AlphaFold/ColabFold: Generate complex or separated chain models; place resulting PDBs under structure/.
-- Boltz-2: Generate or refine conformations as applicable; keep variants named clearly (e.g., complex_af2_v1.pdb, complex_boltz2_v1.pdb).
+3) Structure modeling
+- AlphaFold/ColabFold: generate complex or separate chain models; save PDBs to structure/.
+- Boltz‑2: generate/refine alternative conformations; name clearly (e.g., complex_boltz2_v1.pdb).
 
-4) Interface analysis
-- Use scripts in scripts/ to:
-  - Define interface residues via distance cutoff or buried surface area (BSA)
-  - Compute contacts (heavy atom or sidechain), hydrogen bonds, salt bridges
-  - Compute SASA and BSA per chain; generate contact maps and interface summaries
-- Save outputs as CSV and figures (PNG/SVG) in an analysis/ folder (recommendation).
+4) Interface analysis (static structures)
+- Identify interface residues by distance cutoff and/or buried surface area (BSA).
+- Compute:
+  - Contacts (heavy atom/side‑chain)
+  - Hydrogen bonds and salt bridges
+  - SASA and BSA per chain/residue
+  - Contact/score maps and summary tables
+- Store results as CSV and figures (PNG/SVG), e.g., results/structure/.
 
 5) Molecular dynamics (GROMACS)
-- The simulation/ folder provides a clean workflow for:
-  - Pre-processing: structure cleaning, protonation, box/solvation, ion addition, topology generation
-  - Energy minimization and equilibration (NVT/NPT)
-  - Production runs
-  - Post-processing analysis (RMSD, RMSF, H-bonds, SASA/BSA, contacts, clustering)
+- Use simulation/ workflow for:
+  - Pre‑processing: cleanup, protonation, box/solvation, ion addition, topology
+  - Energy minimization and equilibration (NVT → NPT)
+  - Production run
+  - Post‑processing: RMSD/RMSF, H‑bonds, SASA/BSA, interface contacts, clustering
 
-Example GROMACS command sequence (illustrative):
+Illustrative GROMACS sequence:
 ```bash
 # Pre-processing
 gmx pdb2gmx -f structure/complex_af2_v1.pdb -o sim/processed.gro -p sim/topol.top -i sim/posre.itp
 gmx editconf -f sim/processed.gro -o sim/boxed.gro -c -d 1.0 -bt cubic
-gmx solvate -cp sim/boxed.gro -cs spc216.gro -p sim/topol.top -o sim/solv.gro
-gmx grompp -f simulation/minim.mdp -c sim/solv.gro -p sim/topol.top -o sim/em.tpr
-gmx mdrun -deffnm sim/em
+gmx solvate  -cp sim/boxed.gro -cs spc216.gro -p sim/topol.top -o sim/solv.gro
+gmx grompp   -f simulation/minim.mdp -c sim/solv.gro -p sim/topol.top -o sim/em.tpr
+gmx mdrun    -deffnm sim/em
 
-# Equilibration (NVT then NPT)
+# Equilibration
 gmx grompp -f simulation/nvt.mdp -c sim/em.gro -p sim/topol.top -o sim/nvt.tpr
-gmx mdrun -deffnm sim/nvt
+gmx mdrun  -deffnm sim/nvt
 gmx grompp -f simulation/npt.mdp -c sim/nvt.gro -p sim/topol.top -o sim/npt.tpr
-gmx mdrun -deffnm sim/npt
+gmx mdrun  -deffnm sim/npt
 
 # Production
 gmx grompp -f simulation/md.mdp -c sim/npt.gro -p sim/topol.top -o sim/md.tpr
-gmx mdrun -deffnm sim/md
-
-# Post-processing examples
-gmx rms -s sim/md.tpr -f sim/md.xtc -o analysis/rmsd.xvg
-gmx rmsf -s sim/md.tpr -f sim/md.xtc -o analysis/rmsf.xvg -res
+gmx mdrun  -deffnm sim/md
 ```
 
-6) Cross-link PLM and physics signals
-- Compare PLM-predicted paratope/epitope/interface propensities with:
-  - Structural interface residues from modeling and MD-averaged contacts
-  - Stability metrics (RMSF, H-bonds) around the interface
-- Summarize alignment/misalignment to guide sequence or structure iterations.
+6) MD analysis and cross‑comparison
+- Extract MD‑averaged interface metrics (contacts, H‑bonds, SASA/BSA) and stability (RMSF).
+- Compare PLM propensities vs:
+  - Interface residues from structures
+  - Contact persistence and dynamics from MD
+- Summarize alignment/misalignment to assess predictive value.
 
-## Reproducibility tips
-- Seed PLM sampling and any stochastic steps where applicable
-- Record software versions (Python, PyTorch, GROMACS, force fields)
-- Keep a YAML or JSON config per experiment (input sequences, PLM model/size, structure model variant, MD settings)
-- Save intermediate artifacts (embeddings, selections, masks) and final outputs
-
-## Results and artifacts
-- Consider organizing outputs as:
+## Suggested results layout
 ```
 results/
   plm/
-    esm2_embeddings/
-    antiberty_scores/
+    esm2/...
+    antiberty/...
   structure/
-    interface_summaries.csv
+    interface_tables.csv
     contact_maps/
+    figures/
   md/
     run_001/
       analysis/
@@ -171,39 +157,44 @@ results/
         hbonds.csv
         sasa_bsa.csv
         interface_contacts.csv
+      figures/
 ```
-- Figures: store in results/*/figures with clear filenames and captions in a RESULTS.md if desired.
 
-## Data conventions
-- Chain IDs: use consistent chain labels (e.g., H/L for antibody heavy/light; R for RBD)
-- Numbering: align residue numbering across sequence, structure, and MD
-- Units: distances in Å, time in ns, temperature in K
+## Reproducibility
+- Fix random seeds where applicable.
+- Record versions (Python, PyTorch, fair‑esm, transformers, GROMACS, force field).
+- Save configs (YAML/JSON) describing inputs, model variants, and MD parameters.
+- Keep intermediate artifacts (embeddings, selections, masks) to avoid recomputation.
 
-## Citations and references
-If you use this repository, please also cite the relevant tools:
-- ESM-2: Lin et al., and the facebookresearch/esm project
-- AntiBERTy: antibody-specific protein language model (cite the original AntiBERTy paper and model repository)
-- AlphaFold/ColabFold: Jumper et al., Nature 2021; Mirdita et al., Nat Methods 2022 (for ColabFold)
-- GROMACS: Abraham et al., SoftwareX 2015 (or the latest GROMACS reference)
-- Any force fields used (e.g., AMBER, CHARMM)
+## Notes and scope
+- This repository is a comparison/benchmark of methods; it does not train or propose a new PLM.
+- Structural modeling and MD parameters strongly influence outcomes; report them alongside results.
+- CR3022–RBD system is used as a concrete case study; scripts are adaptable to other antibody–antigen pairs.
 
-Add exact references and DOIs according to what you used in your experiments.
+## References
+Please cite the original tools you use:
+- ESM‑2 (facebookresearch/esm) — protein language modeling
+- AntiBERTy — antibody‑focused protein language model
+- AlphaFold/ColabFold — structure prediction
+- Boltz‑2 — structure modeling/refinement approach
+- GROMACS — molecular dynamics
+- Force fields employed (e.g., AMBER, CHARMM)
+Add exact bibliographic entries/DOIs corresponding to the specific versions you used.
+
+## License
+Add a LICENSE file (e.g., MIT, Apache‑2.0) to clarify usage rights.
 
 ## Contributing
 - Issues and pull requests are welcome.
-- For substantial changes, please open an issue to discuss what you would like to change.
-- Add tests or example data where appropriate, and document new scripts in scripts/.
-
-## License
-Specify your license (e.g., MIT, Apache-2.0) in a LICENSE file.
+- For substantial changes, open an issue first to discuss your proposal.
+- Please document new scripts/notebooks in scripts/ and include example inputs/outputs.
 
 ## Contact
 - Maintainer: @abbasgholami71
-- For questions or collaboration inquiries, please open an issue in this repository.
+- For questions or collaboration, please open an issue.
 
 ## Acknowledgments
-- Thanks to the authors and maintainers of ESM-2, AntiBERTy, AlphaFold/ColabFold, and GROMACS.
-- This work builds on the broader community’s efforts in protein ML and molecular simulation.
+Thanks to the authors and maintainers of ESM‑2, AntiBERTy, AlphaFold/ColabFold, GROMACS, and the broader protein ML and simulation communities.
 
 ---
-Tip: If your structures or trajectories are large, consider using Git LFS and/or publishing processed data and checkpoints as releases.
+Tip: If structures or trajectories are large, consider Git LFS and/or publishing processed data and checkpoints as GitHub Releases.
