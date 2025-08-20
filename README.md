@@ -141,26 +141,8 @@ gmx mdrun  -deffnm sim/md
 
 ## Notes and scope
 - This repository is a comparison/benchmark of methods; it does not train or propose a new PLM.
-- Structural modeling and MD parameters strongly influence outcomes; report them alongside results.
 - CR3022–RBD system is used as a concrete case study; scripts are adaptable to other antibody–antigen pairs.
 
-## References
-Please cite the original tools you use:
-- ESM‑2 (facebookresearch/esm) — protein language modeling
-- AntiBERTy — antibody‑focused protein language model
-- AlphaFold/ColabFold — structure prediction
-- Boltz‑2 — structure modeling/refinement approach
-- GROMACS — molecular dynamics
-- Force fields employed (e.g., AMBER, CHARMM)
-Add exact bibliographic entries/DOIs corresponding to the specific versions you used.
-
-## License
-Add a LICENSE file (e.g., MIT, Apache‑2.0) to clarify usage rights.
-
-## Contributing
-- Issues and pull requests are welcome.
-- For substantial changes, open an issue first to discuss your proposal.
-- Please document new scripts/notebooks in scripts/ and include example inputs/outputs.
 
 ## Contact
 - Maintainer: @abbasgholami71
@@ -168,6 +150,3 @@ Add a LICENSE file (e.g., MIT, Apache‑2.0) to clarify usage rights.
 
 ## Acknowledgments
 Thanks to the authors and maintainers of ESM‑2, AntiBERTy, AlphaFold/ColabFold, GROMACS, and the broader protein ML and simulation communities.
-
----
-Tip: If structures or trajectories are large, consider Git LFS and/or publishing processed data and checkpoints as GitHub Releases.
