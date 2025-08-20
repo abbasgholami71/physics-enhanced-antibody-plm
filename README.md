@@ -1,6 +1,6 @@
 # Antibody–RBD Interface Analysis with PLMs, Structure Modeling, and MD
 
-Comparative study of the SARS‑CoV‑2 RBD and the CR3022 antibody interface using protein language models (ESM‑2, AntiBERTy), structure prediction/refinement (AlphaFold, Boltz‑2), and molecular dynamics (GROMACS). This repository does not introduce a new or “enhanced” PLM; it evaluates and contrasts predictions across data‑driven models and physics‑based simulations.
+Comparative study of the SARS‑CoV‑2 RBD and the CR3022 antibody interface using protein language models (ESM‑2, AntiBERTy), structure prediction/refinement (AlphaFold, Boltz‑2), and molecular dynamics (GROMACS). This repository evaluates and contrasts predictions across data‑driven models and physics‑based simulations.
 
 Badges:
 - ![Python](https://img.shields.io/badge/Python-3.9%2B-blue.svg)
