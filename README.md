@@ -138,32 +138,6 @@ gmx mdrun  -deffnm sim/md
   - Contact persistence and dynamics from MD
 - Summarize alignment/misalignment to assess predictive value.
 
-## Suggested results layout
-```
-results/
-  plm/
-    esm2/...
-    antiberty/...
-  structure/
-    interface_tables.csv
-    contact_maps/
-    figures/
-  md/
-    run_001/
-      analysis/
-        rmsd.csv
-        rmsf.csv
-        hbonds.csv
-        sasa_bsa.csv
-        interface_contacts.csv
-      figures/
-```
-
-## Reproducibility
-- Fix random seeds where applicable.
-- Record versions (Python, PyTorch, fair‑esm, transformers, GROMACS, force field).
-- Save configs (YAML/JSON) describing inputs, model variants, and MD parameters.
-- Keep intermediate artifacts (embeddings, selections, masks) to avoid recomputation.
 
 ## Notes and scope
 - This repository is a comparison/benchmark of methods; it does not train or propose a new PLM.
